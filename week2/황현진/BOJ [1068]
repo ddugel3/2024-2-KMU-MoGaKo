@@ -1,0 +1,26 @@
+# [[BOJ]1068](https://www.acmicpc.net/problem/1068)
+
+## 풀이
+dfs를 사용하여 배열에서 삭제할 노드와 그 하위 노드를 재귀적으로 제거한 후, 남은 리프 노드의 개수를 센다.
+
+## 전체 코드
+```import sys
+input = sys.stdin.readline
+
+node_num = int(input())
+arr = list(map(int, input().split()))
+delete_node = int(input())
+
+def dfs(num, arr):
+    arr[num] = -2
+    for i in range(len(arr)):
+        if num == arr[i]:
+            dfs(i, arr)
+
+dfs(delete_node, arr)
+count = 0
+for i in range(len(arr)):
+    if arr[i] != -2 and i not in arr:
+        count += 1
+print(count)
+```
