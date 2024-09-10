@@ -1,4 +1,4 @@
-# [[BOJ]1068](https://www.acmicpc.net/source/83720971)
+# [[BOJ]1068](https://www.acmicpc.net/problem/1068)
 
 ## 풀이
 벡터를 활용해 인접리스트를 만들고, DFS를 사용해서 리프노드를 찾는다, 자식이 없거나, 모든 자식이 삭제된 경우 리프 노드로 지정한다.
