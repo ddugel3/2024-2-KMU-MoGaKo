@@ -1,0 +1,68 @@
+# [[BOJ]11401](https://www.acmicpc.net/problem/11401)
+
+## 풀이
+마지막까지 노력했지만, 혼자 힘으로 풀수가 없어서 GPT와 구글링을 활용했습니다.
+이항 계수 계산식은 팩토리얼 값들의 분수꼴이라서 손쉽게 모듈러 연산을 적용할 수가 없습니다.
+이때 '페르마의 소정리'가 필요합니다. (몰랐던 포인트 1)
+### 페르마의 소정리
+소수 p에 대해, a가 p로 나누어 떨어지지 않는 정수일 때, 다음이 성립한다.
+a^(p-1) ≡ 1 (mod p)
+이를 이용하면, a^(-1) ≡ a^(p-2) (mod p)로 역원을 구할 수 있습니다. 즉 , 나눗셈을 역수 곱셈으로 바꾸는 것이 가능합니다.
+따라서 저는 조금 나이브한 방식이지만, 0! ~ 입력받은 수 N의 !까지 미리 값을 구해 저장하고, 팩토리얼의 역원을 위에 서술한 페르마의 소정리를 
+이용하여 구한다음, 역원과 팩토리얼을 활용해 이항 계수를 구하였습니다.
+
+## 전체 코드
+```C++#include <iostream>
+#define MOD 1000000007
+
+using namespace std;
+
+// N까지의 팩토리얼과 그 역원을 저장하는 배열
+long long fact[4000001];
+long long invFact[4000001];
+
+// 거듭제곱을 구하는 함수 (모듈러 거듭제곱)
+long long power(long long x, long long y, long long p) {
+    long long result = 1;
+    x = x % p;
+    while (y > 0) {
+        if (y % 2 == 1) // y가 홀수일 때
+            result = (result * x) % p;
+        y = y >> 1; // y를 2로 나눔
+        x = (x * x) % p; // x를 제곱
+    }
+    return result;
+}
+
+// 팩토리얼과 역팩토리얼을 미리 계산
+void computeFactorials(int n, int p) {
+    fact[0] = 1;
+    for (int i = 1; i <= n; i++) {
+        fact[i] = fact[i-1] * i % p;
+    }
+    // 역팩토리얼 계산: invFact[N] = (fact[N])^{-1} % p
+    invFact[n] = power(fact[n], p-2, p); // 페르마의 소정리 사용
+    for (int i = n-1; i >= 0; i--) {
+        invFact[i] = invFact[i+1] * (i+1) % p;
+    }
+}
+
+int main() {
+    int N, K;
+    cin >> N >> K;
+
+    // N까지의 팩토리얼과 역팩토리얼 계산
+    computeFactorials(N, MOD);
+
+    // 이항 계수 계산: (N! / (K! * (N-K)!)) % MOD
+    if (K == 0 || K == N) {
+        cout << 1 << endl;
+    } else {
+        long long result = fact[N] * invFact[K] % MOD * invFact[N-K] % MOD;
+        cout << result << endl;
+    }
+
+    return 0;
+}
+
+```
