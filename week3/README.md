@@ -6,7 +6,7 @@
 - 알고리즘 문제 풀이 및 풀이 방식 공유
   - Topic : **분할 정복과 그리디 알고리즘**
   - [[BOJ]11401](https://www.acmicpc.net/problem/11401)
-  - [[BOJ]11407](https://www.acmicpc.net/problem/11047)
+  - [[BOJ]11047](https://www.acmicpc.net/problem/11047)
     
 - 모각코 진행 방향 상세 회의
   - 주차별 개인 폴더에 `알고리즘 풀이 파일`, `개인 공부 내용 파일` 올리기
