@@ -1,0 +1,47 @@
+# [[BOJ]15649](https://www.acmicpc.net/problem/15649)
+
+## 풀이
+백 트래킹을 활용해 해결하였습니다. 주어진 범위 내에서 중복을 허용하지 않고 수열을 구성하는 것이므로, DFS로 풀면 풀리겠다 싶어서 DFS로 구현했습니다.
+## 전체 코드
+```C++
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int N, M;
+vector<int> sequence;
+bool visited[9]; // 최대 N이 8이므로 9 크기로 설정 (0번 인덱스는 사용 안 함)
+
+void dfs(int depth) {
+    // M개의 숫자를 선택했을 때 출력
+    if (depth == M) {
+        for (int i = 0; i < M; ++i) {
+            cout << sequence[i] << " ";
+        }
+        cout << "\n";
+        return;
+    }
+
+    // 1부터 N까지의 숫자를 탐색
+    for (int i = 1; i <= N; ++i) {
+        if (!visited[i]) {
+            visited[i] = true;       // i를 선택
+            sequence.push_back(i);   // 수열에 추가
+            dfs(depth + 1);          // 다음 깊이 탐색
+            visited[i] = false;      // 백트래킹을 위해 선택 해제
+            sequence.pop_back();     // 수열에서 제거
+        }
+    }
+}
+
+int main() {
+    cin >> N >> M;  // N과 M 입력 받기
+    dfs(0);         // 깊이 0부터 시작
+    return 0;
+}
+
+}
+
+```
