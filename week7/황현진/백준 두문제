@@ -1,0 +1,120 @@
+# [[BOJ]1197](https://www.acmicpc.net/problem/1197)
+
+## 풀이
+가중치가 최소가 되는 간선만 선택하며 사이클을 방지해 최소 신장 트리를 구성하여 문제를 해결한다.
+
+## 전체 코드
+```
+import sys
+import heapq
+
+def find_parent(parent, x):
+    if parent[x] != x:
+        parent[x] = find_parent(parent, parent[x])
+    return parent[x]
+
+def union_parent(parent, a, b):
+    root_a = find_parent(parent, a)
+    root_b = find_parent(parent, b)
+    if root_a < root_b:
+        parent[root_b] = root_a
+    else:
+        parent[root_a] = root_b
+
+input = sys.stdin.read
+data = input().split()
+v = int(data[0])
+e = int(data[1])
+
+edges = []
+parent = [i for i in range(v + 1)]
+
+index = 2
+for _ in range(e):
+    a = int(data[index])
+    b = int(data[index + 1])
+    cost = int(data[index + 2])
+    edges.append((cost, a, b))
+    index += 3
+
+edges.sort()
+result = 0
+
+for cost, a, b in edges:
+    if find_parent(parent, a) != find_parent(parent, b):
+        union_parent(parent, a, b)
+        result += cost
+
+print(result)
+
+```
+
+
+# [[BOJ]1991](https://www.acmicpc.net/problem/1991)
+
+## 풀이
+트리를 만든 후, 전위 순회, 중위 순회, 후위 순회를 하며 노드를 출력한다.
+
+## 전체 코드
+```
+import sys
+input = sys.stdin.read
+
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+class BinaryTree:
+    def __init__(self):
+        self.nodes = {}
+
+    def insert(self, value, left, right):
+        if value not in self.nodes:
+            self.nodes[value] = Node(value)
+        node = self.nodes[value]
+
+        if left != '.':
+            if left not in self.nodes:
+                self.nodes[left] = Node(left)
+            node.left = self.nodes[left]
+        
+        if right != '.':
+            if right not in self.nodes:
+                self.nodes[right] = Node(right)
+            node.right = self.nodes[right]
+
+    def preorder(self, node):
+        if node:
+            print(node.value, end="")
+            self.preorder(node.left)
+            self.preorder(node.right)
+
+    def inorder(self, node):
+        if node:
+            self.inorder(node.left)
+            print(node.value, end="")
+            self.inorder(node.right)
+
+    def postorder(self, node):
+        if node:
+            self.postorder(node.left)
+            self.postorder(node.right)
+            print(node.value, end="")
+
+data = input().splitlines()
+n = int(data[0])
+tree = BinaryTree()
+
+for i in range(1, n + 1):
+    value, left, right = data[i].split()
+    tree.insert(value, left, right)
+
+tree.preorder(tree.nodes['A'])
+print()
+tree.inorder(tree.nodes['A'])
+print()
+tree.postorder(tree.nodes['A'])
+
+```
