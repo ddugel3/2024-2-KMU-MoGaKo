@@ -11,6 +11,8 @@
 - 모각코 진행 방향 상세 회의
   - 주차별 개인 폴더에 `알고리즘 풀이 파일`, `개인 공부 내용 파일` 올리기
 
+![KakaoTalk_Photo_2024-11-19-23-54-23 002](https://github.com/user-attachments/assets/86ed6fe9-c5a0-44e7-aaa4-0e9ebb6fd977)
+![KakaoTalk_Photo_2024-11-19-23-54-22 001](https://github.com/user-attachments/assets/8ae172f9-1b1e-4f7c-8e1a-9e514b706eb6)
 
 
 ## 소감
